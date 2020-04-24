@@ -1,7 +1,7 @@
 # koa+typescript+ MVC设计实现
-> 不需要使用koa中的app.use去定义，完全实现面向对象方式继承Controller，并且在Controller中使用装饰器（以下全文称为注解）定义请求方法。
-> 早期想法：我想获取我所有的后台API，怎么办？所以这套设计思想，就是为了在项目，启动的时候我们就能拿到所有的API。
-> 扩展方面：可以在 <code>routes/decorator.ts</code>中，实现类是Java swagger自动生成API文档的能力
+> 不需要使用koa中的app.use去定义，完全实现面向对象方式继承Controller，并且在Controller中使用装饰器（以下全文称为注解）定义请求方法。 
+> 早期想法：我想获取我所有的后台API，怎么办？所以这套设计思想，就是为了在项目启动的时候我们就能拿到所有的API，并且在<code>routes/decorator.ts</code>中编写权限校验。 
+> 扩展方面：可以在 <code>routes/decorator.ts</code>中，实现类似Java swagger自动生成API文档的能力 
 
 # 安装
 
@@ -9,6 +9,44 @@
 
 ```bash
 cd backend npm install
+```
+
+# 定义基类Controller
+```typescript
+@Controller({ prefix: '/api' })
+class ApiController extends BaseController {
+}
+```
+
+# 定义业务Controller
+```typescript
+@Controller({ prefix: '/hello' })
+class BusinessController extends ApiController {
+    @GET({
+        url: '/',
+        name: '你好世界！'
+    })
+    async index(ctx, next) {
+        let model = new ResultModel();
+        model.code = 0;
+        model.data = 'Hello World!';
+        ctx.body = model;
+    }
+
+    @POST({
+        url: '/post',
+        name: '我是一个post请求',
+        reqBody: '{"a":1,"b":2}'
+    })
+    async post(ctx, next) {
+        let { a, b } = ctx.request.body;
+        let model = new ResultModel();
+        model.code = 0;
+        model.data = `${a},${b}`;
+        ctx.body = model;
+    }
+
+}
 ```
 
 # 运行
