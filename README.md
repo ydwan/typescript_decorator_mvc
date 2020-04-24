@@ -11,6 +11,44 @@
 cd backend npm install
 ```
 
+# 定义基类Controller
+```typescript
+@Controller({ prefix: '/api' })
+class ApiController extends BaseController {
+}
+```
+
+# 定义业务Controller
+```typescript
+@Controller({ prefix: '/hello' })
+class BusinessController extends ApiController {
+    @GET({
+        url: '/',
+        name: '你好世界！'
+    })
+    async index(ctx, next) {
+        let model = new ResultModel();
+        model.code = 0;
+        model.data = 'Hello World!';
+        ctx.body = model;
+    }
+
+    @POST({
+        url: '/post',
+        name: '我是一个post请求',
+        reqBody: '{"a":1,"b":2}'
+    })
+    async post(ctx, next) {
+        let { a, b } = ctx.request.body;
+        let model = new ResultModel();
+        model.code = 0;
+        model.data = `${a},${b}`;
+        ctx.body = model;
+    }
+
+}
+```
+
 # 运行
 **建议使用vscode**
 在项目根目录创建.vscode/launch.json
