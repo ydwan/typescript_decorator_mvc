@@ -1,7 +1,7 @@
 # koa+typescript+ MVC设计实现
-> 不需要使用koa中的app.use去定义，完全实现面向对象方式继承Controller，并且在Controller中使用装饰器（以下全文称为注解）定义请求方法。
-> 早期想法：我想获取我所有的后台API，怎么办？所以这套设计思想，就是为了在项目，启动的时候我们就能拿到所有的API。
-> 扩展方面：可以在 <code>routes/decorator.ts</code>中，实现类是Java swagger自动生成API文档的能力
+> 不需要使用koa中的app.use去定义，完全实现面向对象方式继承Controller，并且在Controller中使用装饰器（以下全文称为注解）定义请求方法。 
+> 早期想法：我想获取我所有的后台API，怎么办？所以这套设计思想，就是为了在项目启动的时候我们就能拿到所有的API，并且在<code>routes/decorator.ts</code>中编写权限校验。 
+> 扩展方面：可以在 <code>routes/decorator.ts</code>中，实现类似Java swagger自动生成API文档的能力 
 
 # 安装
 
