@@ -6,7 +6,7 @@ import ApiController from '../ApiController';
 @Controller({ prefix: '/hello' })
 class BusinessController extends ApiController {
     @GET({
-        url: '/',
+        path: '/',
         name: '你好世界！'
     })
     async index(ctx, next) {
@@ -17,7 +17,7 @@ class BusinessController extends ApiController {
     }
 
     @POST({
-        url: '/post',
+        path: '/post',
         name: '我是一个post请求',
         reqBody: '{"a":1,"b":2}'
     })

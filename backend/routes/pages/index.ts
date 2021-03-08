@@ -4,7 +4,7 @@ import { Controller, GET } from '../decorator';
 @Controller({ prefix: '/' })
 class PageController {
     @GET({
-        url: '/',
+        path: '/',
         name: '页面根路由'
     })
     async index (ctx, next) {

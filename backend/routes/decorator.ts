@@ -15,7 +15,7 @@ export const PREFIX = 'PREFIX';
 
 export class ReqOptions {
     // 路由path
-    url: string = '/';
+    path: string = '/';
     // path名称
     name: string = '';
     // 路由请求方法
@@ -36,7 +36,7 @@ export class ReqOptions {
  */
 export function Request(option: ReqOptions) {
     let {
-        url = '/',
+        path = '/',
         method = RequestMethod.GET,
         needLogin = false,
         needUserInfo = false,
@@ -53,7 +53,7 @@ export function Request(option: ReqOptions) {
             try {
                 let prefix = Reflect.getMetadata(PREFIX, target.constructor) || '/';
                 // 防止父类prefix 和 当前类prefix 开头没有 / ，进行补全
-                let fullActionPath = '/' + prefix + '/' + url;
+                let fullActionPath = '/' + prefix + '/' + path;
                 // 将多余的 / 去除
                 fullActionPath = fullActionPath.replace(/\/{2,999}/g, '/');
                 if (fullActionPath.indexOf('/api') >= 0) {
@@ -69,7 +69,7 @@ export function Request(option: ReqOptions) {
                 // paddingRight原因只为了console美观
                 let methodsBeautify = paddingRight(`【${method.toUpperCase()}】`, 6, ' ');
                 console.log(`${methodsBeautify} action path:  ${fullActionPath}`);
-                router[method](url, async (ctx, next) => {
+                router[method](path, async (ctx, next) => {
                     let result = new ResultModel();
                     result.code = ResultEnum.NOTAUTH;
                     result.message = '没有权限，请重新登录后重试';
